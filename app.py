@@ -14,16 +14,17 @@ def helloworld():
 
 @app.route("/chart")
 def main():
-    x = [1,3,5]
-    y = [2,4,7]
-
     plt.figure()
-    plt.plot(x, y)
+    plt.plot([0], [0])
     os.makedirs("static", exist_ok=True)
     plt.savefig("static/chart.png")
     plt.close()
+
     return render_template("index.html")
 
+@app.route("/draw")
+def draw():
+    return "draw"
 
 if __name__ == "__main__":
     app.run()
