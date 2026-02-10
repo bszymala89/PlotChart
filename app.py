@@ -10,10 +10,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def helloworld():
-    welcomeText = "Hello from server!"
+    welcome_text = "Hello from server!"
     # finalText = re.fullmatch(r"[x0-9 +-*/]", welcomeText.lower())
 
-    return welcomeText
+    return welcome_text
 
 
 @app.route("/chart", methods=["GET", "POST"])
@@ -35,10 +35,10 @@ def chart_post():
     equation = request.form.get("input")
 
     x1 = 1
-    y1 = mathUtils.calculateEquation(equation, x1)
+    y1 = mathUtils.calculate_equation(equation, x1)
 
     x2 = 4
-    y2 = mathUtils.calculateEquation(equation, x2)
+    y2 = mathUtils.calculate_equation(equation, x2)
 
     plt.figure()
     plt.plot([x1, x2], [y1, y2])

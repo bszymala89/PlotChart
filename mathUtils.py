@@ -1,22 +1,22 @@
-def isValidEquation(equation):
-    allowedChars = "x0123456789+-*/ "
-    correctCharCount = 0
-    hasNumber = False
+def is_valid_equation(equation):
+    allowed_chars = "x0123456789+-*/ "
+    correct_char_count = 0
+    has_number = False
     for i in equation:
-        for j in allowedChars:
+        for j in allowed_chars:
             if j == i.lower():
                 if i.isdigit() or i.lower() == "x":
-                    hasNumber = True
-                correctCharCount += 1
+                    has_number = True
+                correct_char_count += 1
                 break
 
-    if correctCharCount == len(equation) and hasNumber:
+    if correct_char_count == len(equation) and has_number:
         return True
     else:
         return False
 
-def calculateEquation(equation, x):
-    if isValidEquation(equation):
+def calculate_equation(equation, x):
+    if is_valid_equation(equation):
         equation = equation.lower().replace(" ", "")
         result = eval(equation)
         print(result)
