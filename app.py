@@ -18,13 +18,6 @@ def helloworld():
 
 @app.route("/chart", methods=["GET", "POST"])
 def main():
-    equasion = request.form.get("input")
-    #1. sprowadz do malych liter
-    #2. z liter przepusc tylko "x"
-    #3. ze operacji matematycznych dozwolone jest "+ - * /"
-    #4. dozwolone cyfry to "0,1,2,3,4,5,6,7,8,9"
-    #5. spacje muszą być rowniez dozwolone
-
     x = 1
     y = 1
 
@@ -36,15 +29,16 @@ def main():
 
     return render_template("index.html")
 
+
 @app.route("/chart_post", methods=["GET", "POST"])
 def chart_post():
-    equasion = request.form.get("input")
+    equation = request.form.get("input")
 
     x1 = 1
-    y1 = mathUtils.calculateEquasion(equasion, x1)
+    y1 = mathUtils.calculateEquation(equation, x1)
 
     x2 = 4
-    y2 = mathUtils.calculateEquasion(equasion, x2)
+    y2 = mathUtils.calculateEquation(equation, x2)
 
     plt.figure()
     plt.plot([x1, x2], [y1, y2])
