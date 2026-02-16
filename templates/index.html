@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <Title>
         PlotChart
     </Title>
@@ -10,9 +11,11 @@
     </h1>
     <img src="static/chart.png"> 
 
-    <form action="/chart_post" method="POST">
-        <label for="input" >y = </label>
-        <input type="text" name="input" placeholder="x + 5">
-    </form>
+    <div>
+        <form action="/chart_post" method="POST">
+            <label for="input" >y = </label>
+            <input type="text" name="input" placeholder="x + 5">
+        </form>
+    </div>
     
 </body>
