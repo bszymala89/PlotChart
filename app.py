@@ -1,27 +1,32 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
-import matplotlib.pyplot as plt
+import plotUtils
 import numpy as np
-import os
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def helloworld():
-    return "Hello from server!"
+    welcome_text = "Hello from server!"
+
+    return welcome_text
 
 
-@app.route("/chart")
+@app.route("/chart", methods=["GET", "POST"])
 def main():
-    x = [1,3,5]
-    y = [2,4,7]
+    
+    plotUtils.draw_plot([0,0], "x")
 
-    plt.figure()
-    plt.plot(x, y)
-    os.makedirs("static", exist_ok=True)
-    plt.savefig("static/chart.png")
-    plt.close()
+    return render_template("index.html")
+
+
+@app.route("/chart_post", methods=["GET", "POST"])
+def chart_post():
+    equation = request.form.get("input")
+
+    plotUtils.draw_plot([1,4], equation)
+
     return render_template("index.html")
 
 
