@@ -16,7 +16,7 @@ def helloworld():
 @app.route("/chart", methods=["GET", "POST"])
 def main():
     
-    plotUtils.draw_plot([0,0], "x")
+    plotUtils.draw_plot([0,0], "x", "blue")
 
     return render_template("index.html")
 
@@ -24,8 +24,9 @@ def main():
 @app.route("/chart_post", methods=["GET", "POST"])
 def chart_post():
     equation = request.form.get("input")
+    color = request.form.get("color_input")
 
-    plotUtils.draw_plot([1,4], equation)
+    plotUtils.draw_plot([1,4], equation, color)
 
     return render_template("index.html")
 
