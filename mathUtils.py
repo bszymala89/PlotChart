@@ -23,3 +23,11 @@ def calculate_equation(equation, x):
         return result
     else:
         print("wrong equation") 
+
+def convert_str_to_list(min:str, max:str):
+    final_list = []
+    
+    for i in range(int(min), int(max)):
+        final_list.append(int(i))
+
+    return final_list
