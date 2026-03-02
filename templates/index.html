@@ -10,19 +10,30 @@
         Chart
     </h1>
 
-    <div class="left_split_div">
-        <div class="chart_input_container">
-            <form action="/chart_post" method="POST">
-                <label for="input" class="chart_label">y = </label>
-                <input type="text" name="input" placeholder="x + 5" class="chart_input">
-                <button class="draw_chart_button">Draw</button>
-                <input type="color" name="color_input">
-            </form>
+    <div>
+        <div class="left_split_div">
+            <div class="chart_input_container">
+                <form action="/chart_post" method="POST">
+                    <label for="input" class="chart_label">y = </label>
+                    <input type="text" name="input" placeholder="x + 5" class="chart_input">
+
+                    <label for="min_x_input" class="chart_label">from</label>
+                    <input type="text" name="min_x_input" placeholder="-5", class="chart_input">
+
+                    <label for="max_x_input" class="chart_label">to</label>
+                    <input type="text" name="max_x_input" placeholder="5", class="chart_input">
+
+                    <button class="draw_chart_button">Draw</button>
+
+                    <input type="color" name="color_input" class="chart_input">
+                </form>
+            </div>
+        </div>
+
+        <div class="right_split_div">
+            <img src="static/chart.png" class="chart_img">
         </div>
     </div>
 
-    <div class="right_split_div">
-        
-        <img src="static/chart.png" class="chart_img">
-    </div>
+    
 </body>
