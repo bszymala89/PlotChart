@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from models.plotData import PlotData
 
 import plotUtils
 import mathUtils
@@ -24,18 +25,26 @@ def main():
 
 @app.route("/chart_post", methods=["GET", "POST"])
 def chart_post():
-    equation = request.form.get("input")
-    min_x = request.form.get("min_x_input")
-    max_x = request.form.get("max_x_input")
+    global data_list
 
-    color = request.form.get("color_input")
+    data = PlotData(
+        request.form.get("input"),
+        request.form.get("color_input"),
+        request.form.get("min_x_input"),
+        request.form.get("max_x_input")
+        )
 
-    plotUtils.draw_plot(mathUtils.convert_str_to_list(min_x, max_x), equation, color)
+    data_list.append(data)
+
+    for i in data_list:
+        plotUtils.draw_plot(i)
 
     return render_template("index.html")
 
 
 if __name__ == "__main__":
+    data_list = []
+
     app.run()
 
 # 1. Przycisk do rysowania
