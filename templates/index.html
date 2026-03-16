@@ -27,9 +27,22 @@
 
                     <input type="color" name="color_input" class="chart_input">
 
-                    <div id="plot_data">
-                        <script src="../script.js"></script>
-                    </div>
+                    <div id="plot_data" data-plots='{{ plot_data | tojson }}'></div>
+
+                    <table id="plot_table">
+                        <thead>
+                            <tr>
+                                <th>Equation</th>
+                                <th>Min X</th>
+                                <th>Max X</th>
+                                <th>Color</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+                    <script src="{{ url_for('static', filename='script.js') }}"></script>
                 </form>
             </div>
         </div>
