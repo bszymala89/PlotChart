@@ -20,7 +20,7 @@ def helloworld():
 def main():
     global data_list
 
-    plotUtils.draw_plot(PlotData("x", "blue", "0", "0"))
+    plotUtils.draw_plots(PlotData("x", "blue", "0", "0"))
 
     plot_data = [vars(data) for data in data_list]
 
@@ -40,8 +40,7 @@ def chart_post():
 
     data_list.append(data)
 
-    for i in data_list:
-        plotUtils.draw_plot(i)
+    plotUtils.draw_plots(data_list)
 
     plot_data = [vars(data) for data in data_list]
 
