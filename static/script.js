@@ -1,54 +1,55 @@
-const plot_data_element = document.getElementById("plot_data")
-const plot_data = JSON.parse(plot_data_element.dataset.plots)
+function addPlot() {
+  const eq = document.getElementById("equation").value.trim();
+  if (!eq) {
+    alert("Please enter an equation.");
+    return;
+  }
 
-const table = document.getElementById("plot_table")
+  const color = document.getElementById("color").value;
+  const minX = document.getElementById("minX").value.trim() || "-10";
+  const maxX = document.getElementById("maxX").value.trim() || "10";
 
-//create header
-// const thead = document.createElement("thead")
-// const header_row = document.createElement("tr")
-// const headers = ["Equation", "Min X", "Max X", "Color"]
+  const tbody = document.querySelector("#plotTable tbody");
+  const row = tbody.insertRow();
+  row.innerHTML = `
+    <td contenteditable="true">${eq}</td>
+    <td><input type="color" value="${color}" style="width:50px;height:26px;border:none;cursor:pointer"></td>
+    <td contenteditable="true">${minX}</td>
+    <td contenteditable="true">${maxX}</td>
+    <td><button class="del-btn" onclick="this.closest('tr').remove()">&times;</button></td>
+  `;
 
-headers.forEach(text => {
-    const th = document.createElement("th")
-    th.textContent = text
-    header_row.appendChild(th)
-});
+  document.getElementById("equation").value = "";
+  refreshChart();
+}
 
-thead.appendChild(header_row)
-table.appendChild(thead)
+function refreshChart() {
+  const rows = document.querySelectorAll("#plotTable tbody tr");
+  if (rows.length === 0) {
+    return;
+  }
 
-const tbody = document.createElement("tbody")
+  const plots = [];
+  rows.forEach((row) => {
+    const cells = row.cells;
+    plots.push({
+      equation: cells[0].innerText.trim(),
+      color: cells[1].querySelector("input").value,
+      min_x: cells[2].innerText.trim() || "-10",
+      max_x: cells[3].innerText.trim() || "10"
+    });
+  });
 
-plot_data.forEach(element => {
-    const row = document.createElement("tr")
-
-    const equation = document.createElement("td")
-    equation.textContent = element.equation
-    row.appendChild(equation)
-
-    const min_x = document.createElement("td")
-    min_x.textContent = element.min_x
-    row.appendChild(min_x)
-
-    const max_x = document.createElement("td")
-    max_x.textContent = element.max_x
-    row.appendChild(max_x)
-
-    const color = document.createElement("td")
-    const color_box = document.createElement("div")
-
-    color_box.style.width = "20px"
-    color_box.style.height = "20px"
-
-    color_box.style.backgroundColor = element.color
-
-    color.appendChild(color_box)
-
-    row.appendChild(color)
-
-    tbody.appendChild(row)
-});
-
-table.appendChild(tbody)
-
-plot_data_element.appendChild(table)
+  fetch("/plot", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(plots)
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      const img = document.getElementById("chartImg");
+      img.src = "data:image/png;base64," + data.image;
+      img.style.display = "block";
+      document.getElementById("placeholder").style.display = "none";
+    });
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <Title>
+        PlotChart
+    </Title>
+</head>
+<body>
+    <h1 class="chart_h1">
+        Chart
+    </h1>
+
+    <div>
+        <div class="left_split_div">
+            <div class="chart_input_container">
+
+                    <label for="input" class="chart_label">y = </label>
+                    <input type="text" id="equation" name="input" placeholder="x + 5" class="chart_input">
+
+                    <input type="color" id="color" name="color_input" class="chart_input">
+
+                    <label>X range:</label>
+                    <div style="display:flex;gap:6px;">
+                        <input type="text" id="minX" placeholder="min (default -10)" style="flex:1">
+                        <input type="text" id="maxX" placeholder="max (default 10)" style="flex:1">
+                    </div>
+                    <button onclick="addPlot()">Draw</button>
+
+                    <table id="plotTable">
+                        <thead>
+                            <tr>
+                                <th>Equation</th>
+                                <th>Min X</th>
+                                <th>Max X</th>
+                                <th>Color</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                <button id="refreshBtn" onclick="refreshChart()">Refresh Chart</button>
+            </div>
+        </div>
+
+        <div class="right_split_div">
+            <div id="chart_container">
+                <img src="" id="chartImg" alt="Chart">
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>

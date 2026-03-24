@@ -1,52 +1,56 @@
-from flask import Flask, render_template, request
+import base64
+import io
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+from flask import Flask, render_template, request, jsonify
 from models.plotData import PlotData
 
-import plotUtils
 import mathUtils
 import numpy as np
 
-app = Flask(__name__)
-
-data_list = []
+app = Flask(__name__, template_folder=".", static_folder="static")
 
 @app.route("/")
-def helloworld():
-    welcome_text = "Hello from server!"
+def index():
+    return render_template("index.html")
 
-    return welcome_text
+@app.route("/plot", methods=["POST"])
+def plot():
+    plots = request.get_json()
 
+    fig, ax = plt.subplots()
 
-@app.route("/chart", methods=["GET", "POST"])
-def main():
-    global data_list
+    ax.axhline(0, color="black", linewidth=0.8)
+    ax.axvline(0, color="black", linewidth=0.8)
+    ax.grid(True, linestyle="--", alpha=0.5)
 
-    plotUtils.draw_plot(PlotData("x", "blue", "0", "0"))
-
-    plot_data = [vars(data) for data in data_list]
-
-    return render_template("index.html", plot_data=plot_data)
-
-
-@app.route("/chart_post", methods=["GET", "POST"])
-def chart_post():
-    global data_list
-
-    data = PlotData(
-        request.form.get("input"),
-        request.form.get("color_input"),
-        request.form.get("min_x_input"),
-        request.form.get("max_x_input")
+    for p in plots:
+        pd = PlotData(
+            p["equation"],
+            p["color"],
+            p["min_x"],
+            p["max_x"]
         )
 
-    data_list.append(data)
+        x_values = mathUtils.convert_str_to_list(pd.min_x, pd.max_x)
+        y_values = [mathUtils.calculate_equation(pd.equation, x) for x in x_values]
 
-    for i in data_list:
-        plotUtils.draw_plot(i)
+        ax.plot(x_values, y_values, color=pd.color, label=f"y= {pd.equation}")
+    
+    ax.legend()
+    buf = io.BytesIO()
 
-    plot_data = [vars(data) for data in data_list]
+    fig.savefig(buf, format="png")
+    plt.close(fig)
 
-    return render_template("index.html", plot_data=plot_data)
+    buf.seek(0)
+    image_base64 = base64.b64encode(buf.read()).decode("utf-8")
+
+    return jsonify({"image": image_base64})
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
