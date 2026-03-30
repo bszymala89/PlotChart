@@ -27,6 +27,12 @@ def plot():
     ax.axvline(0, color="black", linewidth=0.8)
     ax.grid(True, linestyle="--", alpha=0.5)
 
+    ax.set_xlim([-20, 20])
+    ax.set_ylim([-20, 20])
+
+    fig.set_figheight(6)
+    fig.set_figwidth(6)
+
     for p in plots:
         pd = PlotData(
             p["equation"],
