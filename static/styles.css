@@ -54,6 +54,12 @@ body {
   align-items: center;
 }
 
+.chart_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .right_split_div {
   display: flex;
   flex: 2;

@@ -1,51 +1,62 @@
-from flask import Flask, render_template, request
+import base64
+import io
 
-import plotUtils
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+from flask import Flask, render_template, request, jsonify
+from models.plotData import PlotData
+
 import mathUtils
 import numpy as np
 
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder=".", static_folder="static")
 
 @app.route("/")
-def helloworld():
-    welcome_text = "Hello from server!"
+def index():
+    return render_template("index.html")
 
-    return welcome_text
+@app.route("/plot", methods=["POST"])
+def plot():
+    plots = request.get_json()
 
+    fig, ax = plt.subplots()
 
-@app.route("/chart", methods=["GET", "POST"])
-def main():
+    ax.axhline(0, color="black", linewidth=0.8)
+    ax.axvline(0, color="black", linewidth=0.8)
+    ax.grid(True, linestyle="--", alpha=0.5)
+
+    ax.set_xlim([-20, 20])
+    ax.set_ylim([-20, 20])
+
+    fig.set_figheight(6)
+    fig.set_figwidth(6)
+
+    for p in plots:
+        pd = PlotData(
+            p["equation"],
+            p["color"],
+            p["min_x"],
+            p["max_x"]
+        )
+
+        x_values = mathUtils.convert_str_to_list(pd.min_x, pd.max_x)
+        y_values = [mathUtils.calculate_equation(pd.equation, x) for x in x_values]
+
+        ax.plot(x_values, y_values, color=pd.color, label=f"y= {pd.equation}")
     
-    plotUtils.draw_plot([0,0], "x", "blue")
+    ax.legend()
+    buf = io.BytesIO()
 
-    return render_template("index.html")
+    fig.savefig(buf, format="png")
+    plt.close(fig)
 
+    buf.seek(0)
+    image_base64 = base64.b64encode(buf.read()).decode("utf-8")
 
-@app.route("/chart_post", methods=["GET", "POST"])
-def chart_post():
-    equation = request.form.get("input")
-    min_x = request.form.get("min_x_input")
-    max_x = request.form.get("max_x_input")
-
-    color = request.form.get("color_input")
-
-    plotUtils.draw_plot(mathUtils.convert_str_to_list(min_x, max_x), equation, color)
-
-    return render_template("index.html")
+    return jsonify({"image": image_base64})
 
 
 if __name__ == "__main__":
-    app.run()
-
-# 1. Przycisk do rysowania
-
-
-# 2, Zakres rysowania wykresu ( od jakiego x do jakiego x)
-# 3. Przycisk + zeby dodac kolejny wykres liniowy na charcie
-
-
-# 4. Zmiana koloru wykresu
-# 1 -> 4 -> 2 -> 3
-
-# https://getcssscan.com/css-buttons-examples
+    app.run(debug=True)

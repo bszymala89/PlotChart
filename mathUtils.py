@@ -19,7 +19,7 @@ def calculate_equation(equation, x):
     if is_valid_equation(equation):
         equation = equation.lower().replace(" ", "")
         result = eval(equation)
-        print(result)
+        print("Quotation:", result)
         return result
     else:
         print("wrong equation") 
