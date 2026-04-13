@@ -9,17 +9,42 @@ table {
 }
 
 th {
+  font-family: "Trebuchet MS", sans-serif;
   border: 1px solid;
   padding: 5px;
 }
 
 td {
+  font-family: "Trebuchet MS", sans-serif;
   border: 1px solid;
   padding: 5px;
 }
 
+thead {
+  background-color: rgb(255, 160, 176);
+}
+
+tbody {
+  text-align:center
+}
+
+button {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  background-color: rgb(255, 160, 176);
+
+  border-radius: 5px;
+  border: 1px solid black;
+  width: 40%;
+  height: 20px;
+}
+
+input {
+  font-family: "Trebuchet MS", sans-serif;
+}
+
 .chart_h1 {
-  font-family: "Gill Sans", sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   text-align: center;
 }
 
@@ -30,38 +55,15 @@ td {
 }
 
 .chart_input {
-  font-family: "Gill Sans", sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   text-align: center;
 
   font-size: 16px;
 }
 
 .chart_label {
-  font-family: "Gill Sans", sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   font-size: 16px;
-}
-
-.draw_chart_button {
-  background-color: rgb(24, 212, 197);
-  border-radius: 8px;
-  border-width: 0;
-  color: #333333;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 10px 12px;
-  text-align: center;
-  transition: all 200ms;
-  vertical-align: baseline;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
 }
 
 .horizontal_container {
@@ -70,7 +72,7 @@ td {
   justify-content: left;
   align-items: center;
   gap: 5px;
-  margin: 1%;
+  margin: 5%;
 }
 
 .centered_horizontal_container {
@@ -111,4 +113,6 @@ td {
 
 .del-btn {
   background: url("/static/trashcan.svg") center/contain no-repeat;
+  background-color: red;
+  color: red;
 }
