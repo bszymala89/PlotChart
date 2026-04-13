@@ -1,5 +1,21 @@
 body {
   background-color: rgb(230, 164, 164);
+  padding: 50px;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid;
+}
+
+th {
+  border: 1px solid;
+  padding: 5px;
+}
+
+td {
+  border: 1px solid;
+  padding: 5px;
 }
 
 .chart_h1 {
@@ -48,24 +64,51 @@ body {
   touch-action: manipulation;
 }
 
-.chart_input_container {
+.horizontal_container {
   display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  gap: 5px;
+  margin: 1%;
+}
+
+.centered_horizontal_container {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin: 1%;
 }
 
 .chart_container {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 1%;
 }
 
-.right_split_div {
+.content {
   display: flex;
-  flex: 2;
+  gap: 50px;
 }
 
-.left_split_div {
-  display: flex;
+.left {
   flex: 1;
+  background-color: pink;
+  border-radius: 10px;
+  padding: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.right {
+  flex: 2;
+  background-color: pink;
+  border-radius: 10px;
+  padding: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.del-btn {
+  background: url("/static/trashcan.svg") center/contain no-repeat;
 }
