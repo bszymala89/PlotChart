@@ -1,5 +1,5 @@
 def is_valid_equation(equation):
-    allowed_chars = "x0123456789+-*/ "
+    allowed_chars = ".,x0123456789+-*/ "
     correct_char_count = 0
     has_number = False
     for i in equation:
